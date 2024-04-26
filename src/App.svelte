@@ -1,47 +1,74 @@
 <script>
-  import svelteLogo from './assets/svelte.svg'
-  import viteLogo from '/vite.svg'
   import Counter from './lib/Counter.svelte'
+
+  let doubleCounter = 0
+  function doubleIt() {
+    doubleCounter += 2
+  }
+
+  const formValues = {
+    name: '',
+    age: null,
+    desc: '',
+    gender: '',
+    hoby: []
+  }
+
 </script>
 
 <main>
-  <div>
-    <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-      <img src={viteLogo} class="logo" alt="Vite Logo" />
-    </a>
-    <a href="https://svelte.dev" target="_blank" rel="noreferrer">
-      <img src={svelteLogo} class="logo svelte" alt="Svelte Logo" />
-    </a>
+  <div class="card">
+    <!-- <Counter /> -->
+    <button on:click={doubleIt}>Count is {doubleCounter}</button>
   </div>
-  <h1>Vite + Svelte</h1>
+
+  <div>
+    <pre>
+      {JSON.stringify(formValues, null, 2)}
+    </pre>
+  </div>
 
   <div class="card">
-    <Counter />
+    <h2>Form Example</h2>
+    <form>
+      <div>
+        <label for="name">Name</label>
+        <input type="text" id="name" bind:value={formValues.name}>
+      </div>
+
+      <div>
+        <label for="age">Age</label>
+        <input type="number" id="age" bind:value={formValues.age}>
+      </div>
+
+      <div>
+        <label for="desc">Description</label>
+        <textarea name="desc" id="desc" bind:value={formValues.desc}></textarea>
+      </div>
+
+      <div>
+        <label for="gender">Gender</label>
+        <select name="gender" id="gender" bind:value={formValues.gender}>
+          <option value="">Select a gender</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="hoby">Hoby</label>
+        <select name="hoby" id="hoby" bind:value={formValues.hoby} multiple>
+          <option value="soccer">Soccer</option>
+          <option value="music">Music</option>
+        </select>
+      </div>
+    </form>
   </div>
 
-  <p>
-    Check out <a href="https://github.com/sveltejs/kit#readme" target="_blank" rel="noreferrer">SvelteKit</a>, the official Svelte app framework powered by Vite!
-  </p>
-
-  <p class="read-the-docs">
-    Click on the Vite and Svelte logos to learn more
-  </p>
 </main>
 
 <style>
-  .logo {
-    height: 6em;
-    padding: 1.5em;
-    will-change: filter;
-    transition: filter 300ms;
-  }
-  .logo:hover {
-    filter: drop-shadow(0 0 2em #646cffaa);
-  }
-  .logo.svelte:hover {
-    filter: drop-shadow(0 0 2em #ff3e00aa);
-  }
-  .read-the-docs {
-    color: #888;
-  }
+  /* input + label {
+    display: inline-flex;
+  } */
 </style>
