@@ -9,6 +9,9 @@
     import TabA from "./components/TabA.svelte";
     import TabB from "./components/TabB.svelte";
     import Counter, { getTotalCount } from "./lib/Counter.svelte";
+    import Display from "./components/Display.svelte";
+    import Increment from "./components/Increment.svelte";
+    import { counter } from "./stores/stores";
 
   let doubleCounter = 0
   let inputFocus
@@ -16,6 +19,7 @@
 
   onMount(() => {
     inputFocus.focus()
+    
   })
 
   function doubleIt() {
@@ -249,6 +253,17 @@
      <button on:click={() => {
       alert(`Total Count ${getTotalCount()}`)
      }}>Show Total</button>
+
+     <br>
+
+     <h3>Stores</h3>
+     <Display/>
+     <Increment/>
+
+     <br>
+     <h3>Custom Stores : {$counter}</h3>
+     <button on:click={() => counter.increment()}>Increase</button>
+
 </main>
 
 <style>
