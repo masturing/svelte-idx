@@ -1,11 +1,23 @@
 <script>
-    import { setContext } from "svelte";
+    import { onMount, setContext } from "svelte";
     import Greet from "./components/Greet.svelte";
     import Popup from "./components/Popup.svelte";
     import Outer from "./components/Outer.svelte";
     import Card from "./components/Card.svelte";
+    import NameList from "./components/NameList.svelte";
+    import PostList from "./components/PostList.svelte";
+    import TabA from "./components/TabA.svelte";
+    import TabB from "./components/TabB.svelte";
+    import Counter, { getTotalCount } from "./lib/Counter.svelte";
 
   let doubleCounter = 0
+  let inputFocus
+  let activeTab = TabA
+
+  onMount(() => {
+    inputFocus.focus()
+  })
+
   function doubleIt() {
     doubleCounter += 2
   }
@@ -104,7 +116,7 @@
     <form on:submit|preventDefault={submitForm}>
       <div>
         <label for="name">Name</label>
-        <input type="text" id="name" bind:value={formValues.name}>
+        <input type="text" id="name" bind:value={formValues.name} bind:this={inputFocus}>
       </div>
 
       <div>
@@ -214,7 +226,29 @@
       <div slot="body">This is body</div>
      </Card>
 
+     <NameList>
+      <h3 slot="hero" let:firstName let:lastName>
+        {firstName} {lastName}
+      </h3>
+     </NameList>
 
+     <br>
+     <p>API FETCH</p>
+     <PostList/>
+
+     <br>
+     <p>Tab Layout</p>
+     <button on:click={() => (activeTab = TabA)}>Tab A</button>
+     <button on:click={() => (activeTab = TabB)}>Tab B</button>
+     <svelte:component this={activeTab}/>
+
+     <br>
+     <h1>Module Context</h1>
+     <Counter/>
+     <Counter/>
+     <button on:click={() => {
+      alert(`Total Count ${getTotalCount()}`)
+     }}>Show Total</button>
 </main>
 
 <style>
